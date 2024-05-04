@@ -12,6 +12,7 @@ import {
 
 import { RiArticleLine } from 'react-icons/ri'
 import { ImBooks } from 'react-icons/im'
+
 import Logo from '../Logo'
 
 const SideNav = (props) => {
@@ -57,6 +58,12 @@ const SideNav = (props) => {
         </Menu.Item>
         <Menu.Item key="/app/courses" icon={<ImBooks />}>
           <NavLink to="/app/courses">Courses</NavLink>
+        </Menu.Item>
+        <Menu.Item key="/app/projects" icon={<ImBooks />}>
+          <NavLink to="/app/projects">Projects</NavLink>
+        </Menu.Item>
+        <Menu.Item key="/app/groups" icon={<ImBooks />}>
+          <NavLink to="/app/groups">Groups</NavLink>
         </Menu.Item>
         <Menu.Item key="/app/calendar" icon={<CalendarOutlined />}>
           <NavLink to="/app/calendar">Calendar</NavLink>

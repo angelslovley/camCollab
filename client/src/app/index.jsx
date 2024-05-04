@@ -25,6 +25,8 @@ import MyBookMarks from '../views/articles/myBookMarks/myBookMarks'
 import ArticlePage from '../views/ArticlePage'
 import Profile from '../views/Profile'
 import Exams from '../views/exams'
+import Projects from '../views/Projects'
+import Groups from '../views/Grops'
 import { AssessmentCreation, Submissions } from '../views/exams'
 import Lectures from '../views/lectures'
 import Modules from '../views/modules'
@@ -209,7 +211,8 @@ const AuthnticatedApp = () => {
               path="/app/course/:courseId/settings"
               component={CourseSettings}
             /> 
-
+             <Route path="/app/projects" component={Projects} />
+             <Route path="/app/groups" component={Groups} />
              <Route path="/app/articles/:id" component={ArticlePage} />
             <Route path="/app/articles" component={Articles} />
             <Route path="/app/myarticle" component={MyArticle} />

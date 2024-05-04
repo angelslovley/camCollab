@@ -30,6 +30,7 @@ import deadlinesReducer from './reducers/deadlinesReducer'
 import courseSettingsReducer from './reducers/courseSettingsReducer'
 import achievementsReducer from './reducers/achievementsReducer'
 import forumnReducer from './reducers/forumReducer'
+import projectReducer from './reducers/projectReducer'
 
 const persistConfig = {
   key: 'root',
@@ -69,7 +70,8 @@ const reducer = combineReducers({
   deadlines: deadlinesReducer,
   courseSettings: courseSettingsReducer,
   achievements: achievementsReducer,
-  topics:forumnReducer
+  topics:forumnReducer,
+  projects : projectReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)
