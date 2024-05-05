@@ -29,6 +29,9 @@ const enrollmentRouter = require('./routes/enrollment')
 const deadlineRouter = require('./routes/deadlines')
 const achievementsRouter = require('./routes/achievementsRouter')
 const forumn = require('./routes/forumnRouter')
+const chatRoutes = require('./routes/chatRoutes')
+const messageRoutes = require('./routes/messageRoutes')
+
 
 const auth = require('./middleware/auth')
 
@@ -84,7 +87,53 @@ app.use('/courses/:courseId/modules/:moduleId/module-item', courseModuleItem)
 app.use('/courses/:courseId/lectures', lectureRouter)
 app.use('/achievements', achievementsRouter)
 app.use('/topics', forumn)
+app.use("/chat", chatRoutes);
+app.use("/api/message", messageRoutes);
 
-const port = process.env.port || 9000;
 
-app.listen(port, () => console.log(`Node JS server listening on port ${port}`));
+const PORT = process.env.port || 9000;
+
+const server = app.listen(
+  PORT,
+  console.log(`Server running on PORT ${PORT}...`)
+);
+
+const io = require("socket.io")(server, {
+  pingTimeout: 60000,
+  cors: {
+    origin: "http://localhost:4500",
+    // credentials: true,
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log("Connected to socket.io");
+  socket.on("setup", (userData) => {
+    socket.join(userData._id);
+    socket.emit("connected");
+  });
+
+  socket.on("join chat", (room) => {
+    socket.join(room);
+    console.log("User Joined Room: " + room);
+  });
+  socket.on("typing", (room) => socket.in(room).emit("typing"));
+  socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
+
+  socket.on("new message", (newMessageRecieved) => {
+    var chat = newMessageRecieved.chat;
+
+    if (!chat.users) return console.log("chat.users not defined");
+
+    chat.users.forEach((user) => {
+      if (user._id == newMessageRecieved.sender._id) return;
+
+      socket.in(user._id).emit("message recieved", newMessageRecieved);
+    });
+  });
+
+  socket.off("setup", () => {
+    console.log("USER DISCONNECTED");
+    socket.leave(userData._id);
+  });
+});

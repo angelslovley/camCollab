@@ -51,6 +51,7 @@ import CourseSettings from '../views/courseSettings'
 import Achievements from '../views/achievements'
 import CourseRoute from '../components/CourseRoute'
 import Archives from '../views/archives'
+import Chatpage from '../pages/Chatpage'
 
 // public routes redirects to /app if authenticated
 // private routes redirects to login if not authenticated
@@ -220,6 +221,8 @@ const AuthnticatedApp = () => {
             <Route path="/app/profile" component={Profile} />
             <Route path="/app/archives" component={Archives} />
             <Route path="/app/acheivements" component={Achievements} /> 
+            <Route path="/app/chats" component={Chatpage} />
+
             {/* <Route path="/app/*" component={NotFoundView} /> */}
             </Switch>
         </Content>
